@@ -29,7 +29,8 @@ class Console
     return create_the_first_account if accounts_db.empty?
 
     loop do
-###
+      @account = Account.find_account(login_and_password, accounts_db)
+      @account.nil? ? output(I18n.t('ERROR.user_not_exists')) : break
     end
   end
 
@@ -39,7 +40,7 @@ class Console
   end
 
   def main_menu
-    ###TODO implement cards here
+    ###TODO implement cards
   end
 
   def choose_menu
@@ -87,4 +88,7 @@ class Console
 
   private
 
+  def login_and_password
+    { login: enter_login, password: enter_password }
+  end
 end

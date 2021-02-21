@@ -1,5 +1,6 @@
 en:
 
+
   main_menu: "\nWelcome, %{name}
      If you want to\n
      - show all cards - press SC\n
@@ -25,17 +26,6 @@ en:
     not_exist_card_number: "There is no card with number %{number}\n"
     no_money_on_recipient: 'There is no enough money on recipient card'
 
-  common_phrases:
-    create_first_account: "There is no active accounts, do you want to be the first?[y/n]\n"
-    destroy_account: "Are you sure you want to destroy account?[y/n]\n"
-    if_you_want_to_delete: 'If you want to delete:'
-    show_cards: "- %{number}, %{type}"
-    show_cards_for_destroying: "- %{number}, %{type}, press %{index}"
-    press_exit: "press `exit` to exit\n"
-    destroy_card: "Are you sure you want to delete %{card}?[y/n]"
-    after_put: "Money %{amount} was put on %{number}. Balance: %{balance}. Tax: %{tax}"
-    after_withdraw: "Money %{amount} withdrawed from %{number}. Money left: %{balance}. Tax: %{tax}"
-    recipient_card: 'Enter the recipient card:'
 
   ASK:
     name: 'Enter your name'
@@ -47,6 +37,22 @@ en:
    - If you want to create account - press `create`\n
    - If you want to load account - press `load`\n
    - If you want to exit - press `exit`"
+
+  name_must_not_be_empty: 'Your name must not be empty and starts with first upcase letter'
+  name_capitalized: 'Your name must not be empty and starts with first upcase letter'
+
+  login_present: 'Login must present'
+  login_longer_than_symbols: 'Login must be longer then 4 symbols'
+  login_less_than_symbols: 'Login must be shorter then 20 symbols'
+
+  account_exists: 'Such account is already exists'
+
+  password_must_present: 'Password must present'
+  password_has_6_and_more_symbols: 'Password must be longer then 6 symbols'
+  password_has_30_and_less_symbols: 'Password must be shorter then 30 symbols'
+
+  age_between: 'Your Age must be greeter then 23 and lower then 90'
+  no_active_account_yet: "there are no active accounts, type 'y' if you want to create one"
 
   press_exit: "enter `exit` to exit\n"
   exit: 'exit'
