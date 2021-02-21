@@ -1,5 +1,10 @@
 en:
-
+  CARDS:
+    create_card_message: "'You could create one of 3 card types'
+     '- Usual card. 2% tax on card INCOME. 20$ tax on SENDING money from this card. 5% tax on WITHDRAWING money. For creation this card - press `usual`'
+     '- Capitalist card. 10$ tax on card INCOME. 10% tax on SENDING money from this card. 4$ tax on WITHDRAWING money. For creation this card - press `capitalist`'
+     '- Virtual card. 1$ tax on card INCOME. 1$ tax on SENDING money from this card. 12% tax on WITHDRAWING money. For creation this card - press `virtual`'
+     '- For exit - press `exit`'"
 
   main_menu: "\nWelcome, %{name}
      If you want to\n
@@ -26,6 +31,17 @@ en:
     not_exist_card_number: "There is no card with number %{number}\n"
     no_money_on_recipient: 'There is no enough money on recipient card'
 
+  common_phrases:
+    create_first_account: "There is no active accounts, do you want to be the first?[y/n]\n"
+    destroy_account: "Are you sure you want to destroy account?[y/n]\n"
+    if_you_want_to_delete: 'If you want to delete:'
+    show_cards: "- %{number}, %{type}"
+    show_cards_for_destroying: "- %{number}, %{type}, press %{index}"
+    press_exit: "press `exit` to exit\n"
+    destroy_card: "Are you sure you want to delete %{card}?[y/n]"
+    after_put: "Money %{amount} was put on %{number}. Balance: %{balance}. Tax: %{tax}"
+    after_withdraw: "Money %{amount} withdrawed from %{number}. Money left: %{balance}. Tax: %{tax}"
+    recipient_card: 'Enter the recipient card:'
 
   ASK:
     name: 'Enter your name'
@@ -57,3 +73,17 @@ en:
   press_exit: "enter `exit` to exit\n"
   exit: 'exit'
   yes: 'y'
+
+  destroying_message: 'Are you sure you want to destroy account?[y/n]'
+  show_cards: "- %{number}, %{type}"
+  show_cards_for_destroying: "- %{number}, %{type}, press %{index}"
+
+  operations:
+    choose_card:
+      put_money: 'Choose the card for putting:'
+      withdraw_money: 'Choose the card for withdrawing:'
+      send_money: 'Choose the card for sending:'
+    amount:
+      put_money: 'Input the amount of money you want to put on your card'
+      withdraw_money: 'Input the amount of money you want to withdraw'
+      send_money: 'Input the amount of money you want to withdraw'

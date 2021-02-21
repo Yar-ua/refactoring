@@ -1,5 +1,5 @@
 module ConsoleHelper
-  include UserInfo
+  include UserIOHelper
   include Database
 
   COMMANDS = {

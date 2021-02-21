@@ -23,6 +23,17 @@ class Account
     @errors.empty?
   end
 
+  def create_new_type_card(type)
+    case type
+    when Card::CARD_TYPES[:usual] then @cards << CardUsual.new(type)
+    when Card::CARD_TYPES[:capitalist] then @cards << CardCapitalist.new(type)
+    when Card::CARD_TYPES[:virtual] then @cards << CardVirtual.new(type)
+    end
+  end
+
+  def find_card_by_index(choice)
+    @cards[choice.to_i - 1]
+  end
 
   def self.find_account(user_data_inputs, account)
     account.detect do |db_acc|

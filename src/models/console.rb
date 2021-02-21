@@ -40,7 +40,17 @@ class Console
   end
 
   def main_menu
-    ###TODO implement cards
+    loop do
+      output(I18n.t(:main_menu, name: @account.name))
+      case command = choose_menu
+      when COMMANDS[:show_cards] then show_account_cards
+      when COMMANDS[:card_create] then create_new_type_card
+      when COMMANDS[:delete_account] then destroy_account
+      when COMMANDS[:exit] then return run_exit
+      else 
+        redirect_to_cards_console(command)
+      end
+    end
   end
 
   def choose_menu
@@ -82,8 +92,7 @@ class Console
   end
 
   def redirect_to_cards_console(command)
-    ###TODO implement it
-    # CardsConsole.new(@account).cards_choices(command)
+    CardsConsole.new(@account).cards_choices(command)
   end
 
   private

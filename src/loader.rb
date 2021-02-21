@@ -15,5 +15,11 @@ require_relative 'validators/name_validator'
 require_relative 'validators/age_validator'
 require_relative 'validators/password_validator'
 
+require_relative 'models/cards/card'
+require_relative 'models/cards/card_capitalist'
+require_relative 'models/cards/card_usual'
+require_relative 'models/cards/card_virtual'
+
+require_relative 'models/cards_console'
 require_relative 'models/account'
 require_relative 'models/console'
