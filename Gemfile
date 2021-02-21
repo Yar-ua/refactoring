@@ -18,3 +18,5 @@ group :test do
   gem 'simplecov-lcov'
   gem 'undercover'
 end
+
+gem 'i18n'

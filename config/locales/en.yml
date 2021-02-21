@@ -1,0 +1,53 @@
+en:
+
+  main_menu: "\nWelcome, %{name}
+     If you want to\n
+     - show all cards - press SC\n
+     - create card - press CC\n
+     - destroy card - press DC\n
+     - put money on card - press PM\n
+     - withdraw money on card - press WM\n
+     - send money to another card  - press SM\n
+     - destroy account - press `DA`\n
+     - exit from account - press `exit`"
+
+  ERROR:
+    user_not_exists: 'There is no account with given credentials'
+    wrong_command: 'Wrong command. Try again!'
+    no_active_cards: "There is no active cards!\n"
+    wrong_card_type: "Wrong card type. Try again!\n"
+    wrong_number: "You entered wrong number!\n"
+    correct_amount: 'You must input correct amount of money'
+    tax_higher: 'Your tax is higher than input amount'
+    no_money_left: "You don't have enough money on card for such operation"
+    zero_cards: "There is no active cards!\n"
+    invalid_number: 'Please, input correct number of card'
+    not_exist_card_number: "There is no card with number %{number}\n"
+    no_money_on_recipient: 'There is no enough money on recipient card'
+
+  common_phrases:
+    create_first_account: "There is no active accounts, do you want to be the first?[y/n]\n"
+    destroy_account: "Are you sure you want to destroy account?[y/n]\n"
+    if_you_want_to_delete: 'If you want to delete:'
+    show_cards: "- %{number}, %{type}"
+    show_cards_for_destroying: "- %{number}, %{type}, press %{index}"
+    press_exit: "press `exit` to exit\n"
+    destroy_card: "Are you sure you want to delete %{card}?[y/n]"
+    after_put: "Money %{amount} was put on %{number}. Balance: %{balance}. Tax: %{tax}"
+    after_withdraw: "Money %{amount} withdrawed from %{number}. Money left: %{balance}. Tax: %{tax}"
+    recipient_card: 'Enter the recipient card:'
+
+  ASK:
+    name: 'Enter your name'
+    age: 'Enter your age'
+    login: 'Enter your login'
+    password: 'Enter your password'
+
+  greetings: "Hello, we are RubyG bank!\n
+   - If you want to create account - press `create`\n
+   - If you want to load account - press `load`\n
+   - If you want to exit - press `exit`"
+
+  press_exit: "enter `exit` to exit\n"
+  exit: 'exit'
+  yes: 'y'
