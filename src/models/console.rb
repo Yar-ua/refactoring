@@ -2,7 +2,7 @@ class Console
   include ConsoleHelper
 
   def console_menu
-    output(I18n.t(:greetings))
+    output(I18n.t(:hello))
     case user_input
     when COMMANDS[:create] then create_account
     when COMMANDS[:load] then load_account

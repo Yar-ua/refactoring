@@ -49,7 +49,7 @@ en:
     login: 'Enter your login'
     password: 'Enter your password'
 
-  greetings: "Hello, we are RubyG bank!\n
+  hello: "Hello, we are RubyG bank!\n
    - If you want to create account - press `create`\n
    - If you want to load account - press `load`\n
    - If you want to exit - press `exit`"
