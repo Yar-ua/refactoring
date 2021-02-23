@@ -1,6 +1,6 @@
 class Account
   attr_reader :name, :login, :password, :errors, :cards
-  
+
   include Constants
   include DBHelper
 

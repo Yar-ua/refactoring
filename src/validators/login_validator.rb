@@ -1,5 +1,4 @@
 class LoginValidator
-
   attr_accessor :errors, :login
 
   def initialize(login)

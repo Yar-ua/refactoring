@@ -28,3 +28,6 @@ Documentation:
 
 FrozenStringLiteralComment:
   Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false

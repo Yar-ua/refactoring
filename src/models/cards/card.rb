@@ -1,7 +1,7 @@
 class Card
   include Constants
 
-  attr_accessor :balance, :number, :type  
+  attr_accessor :balance, :number, :type
 
   def initialize
     @number = generate_number

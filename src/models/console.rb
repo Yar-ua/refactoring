@@ -47,7 +47,7 @@ class Console
       when COMMANDS[:card_create] then create_new_type_card
       when COMMANDS[:delete_account] then destroy_account
       when COMMANDS[:exit] then return run_exit
-      else 
+      else
         redirect_to_cards_console(command)
       end
     end

@@ -1,6 +1,5 @@
 module Constants
-  
-  PATH = 'accounts.yml'
+  PATH = 'accounts.yml'.freeze
 
   COMMANDS = {
     create: 'create',
@@ -15,7 +14,7 @@ module Constants
     withdraw_money: 'WM',
     send_money: 'SM'
   }.freeze
-  
+
   VALID_RANGE = {
     age: (23..90),
     login: (4..20),
@@ -31,5 +30,4 @@ module Constants
   NUMBER_OF_CARD_SIZE = 16
 
   CARD_NUMBERS = 10
-
 end

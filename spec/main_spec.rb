@@ -3,16 +3,16 @@
 require_relative '../src/loader'
 
 RSpec.describe Console do
-  OVERRIDABLE_FILENAME = 'spec/fixtures/account.yml'.freeze
+  OVERRIDABLE_FILENAME = 'spec/fixtures/account.yml'
 
   COMMON_PHRASES = {
-      create_first_account: "there are no active accounts, type 'y' if you want to create one\n",
-      destroy_account: "Are you sure you want to destroy account?[y/n]\n",
-      if_you_want_to_delete: 'If you want to delete:',
-      choose_card: 'Choose the card for putting',
-      choose_card_withdrawing: 'Choose the card for withdrawing:',
-      input_amount: 'Input the amount of money you want to put on your card',
-      withdraw_amount: 'Input the amount of money you want to withdraw'
+    create_first_account: "there are no active accounts, type 'y' if you want to create one\n",
+    destroy_account: "Are you sure you want to destroy account?[y/n]\n",
+    if_you_want_to_delete: 'If you want to delete:',
+    choose_card: 'Choose the card for putting',
+    choose_card_withdrawing: 'Choose the card for withdrawing:',
+    input_amount: 'Input the amount of money you want to put on your card',
+    withdraw_amount: 'Input the amount of money you want to withdraw'
   }.freeze
 
   HELLO_PHRASES = [
@@ -23,20 +23,20 @@ RSpec.describe Console do
   ].freeze
 
   ASK_PHRASES = {
-      name: 'Enter your name',
-      login: 'Enter your login',
-      password: 'Enter your password',
-      age: 'Enter your age'
+    name: 'Enter your name',
+    login: 'Enter your login',
+    password: 'Enter your password',
+    age: 'Enter your age'
   }.freeze
 
   # rubocop: disable Metrics/LineLength
 
   CREATE_CARD_PHRASES = [
-      'You could create one of 3 card types',
-      '- Usual card. 2% tax on card INCOME. 20$ tax on SENDING money from this card. 5% tax on WITHDRAWING money. For creation this card - press `usual`',
-      '- Capitalist card. 10$ tax on card INCOME. 10% tax on SENDING money from this card. 4$ tax on WITHDRAWING money. For creation this card - press `capitalist`',
-      '- Virtual card. 1$ tax on card INCOME. 1$ tax on SENDING money from this card. 12% tax on WITHDRAWING money. For creation this card - press `virtual`',
-      '- For exit - press `exit`'
+    'You could create one of 3 card types',
+    '- Usual card. 2% tax on card INCOME. 20$ tax on SENDING money from this card. 5% tax on WITHDRAWING money. For creation this card - press `usual`',
+    '- Capitalist card. 10$ tax on card INCOME. 10% tax on SENDING money from this card. 4$ tax on WITHDRAWING money. For creation this card - press `capitalist`',
+    '- Virtual card. 1$ tax on card INCOME. 1$ tax on SENDING money from this card. 12% tax on WITHDRAWING money. For creation this card - press `virtual`',
+    '- For exit - press `exit`'
   ].freeze
 
   # rubocop:enable Metrics/LineLength
@@ -84,18 +84,18 @@ RSpec.describe Console do
   ].freeze
 
   CARDS = {
-      usual: {
-          type: 'usual',
-          balance: 50.00
-      },
-      capitalist: {
-          type: 'capitalist',
-          balance: 100.00
-      },
-      virtual: {
-          type: 'virtual',
-          balance: 150.00
-      }
+    usual: {
+      type: 'usual',
+      balance: 50.00
+    },
+    capitalist: {
+      type: 'capitalist',
+      balance: 100.00
+    },
+    virtual: {
+      type: 'virtual',
+      balance: 150.00
+    }
   }.freeze
 
   let(:current_subject) { described_class.new }
@@ -118,7 +118,7 @@ RSpec.describe Console do
       end
 
       it 'load account if input is load' do
-        allow(current_subject).to receive_message_chain(:user_input) {'load'}
+        allow(current_subject).to receive(:user_input).and_return('load')
         expect(current_subject).to receive(:load_account)
         current_subject.console_menu
       end
@@ -144,7 +144,8 @@ RSpec.describe Console do
 
     context 'with success result' do
       before do
-        allow(current_subject).to receive_message_chain(:gets, :chomp).and_return(success_create_command_input, *success_inputs)
+        allow(current_subject).to receive_message_chain(:gets, :chomp).and_return(success_create_command_input,
+                                                                                  *success_inputs)
         allow(current_subject).to receive(:main_menu)
         allow(current_subject).to receive(:db_accounts).and_return([])
         stub_const('DBHelper::PATH', OVERRIDABLE_FILENAME)
@@ -156,7 +157,7 @@ RSpec.describe Console do
 
       it 'with correct outout' do
         allow(File).to receive(:open)
-        ASK_PHRASES.values.each { |phrase| expect(current_subject).to receive(:puts).with(phrase) }
+        ASK_PHRASES.each_value { |phrase| expect(current_subject).to receive(:puts).with(phrase) }
         ACCOUNT_VALIDATION_PHRASES.values.map(&:values).each do |phrase|
           expect(current_subject).not_to receive(:puts).with(phrase)
         end
@@ -225,7 +226,9 @@ RSpec.describe Console do
           let(:error) { ACCOUNT_VALIDATION_PHRASES[:login][:exists] }
 
           before do
-            allow_any_instance_of(LoginUniqueValidator).to receive(:db_accounts) { [instance_double('Account', login: error_input)] }
+            allow_any_instance_of(LoginUniqueValidator).to receive(:db_accounts) {
+                                                             [instance_double('Account', login: error_input)]
+                                                           }
           end
 
           it { expect { current_subject.console_menu }.to output(/#{error}/).to_stdout }
@@ -281,7 +284,7 @@ RSpec.describe Console do
 
     context 'without active accounts' do
       it do
-        allow(current_subject).to receive_message_chain(:user_input).and_return(success_load_command_input)
+        allow(current_subject).to receive(:user_input).and_return(success_load_command_input)
         allow(current_subject).to receive(:main_menu)
         expect(current_subject).to receive(:db_accounts).and_return([])
         expect(current_subject).to receive(:create_the_first_account).and_return([])
@@ -298,9 +301,9 @@ RSpec.describe Console do
       let(:password) { 'johnny1' }
       let(:account_double) { instance_double('Account', login: login, password: password) }
 
-
       before do
-        allow(current_subject).to receive_message_chain(:gets, :chomp).and_return(success_load_command_input, *all_inputs)
+        allow(current_subject).to receive_message_chain(:gets, :chomp).and_return(success_load_command_input,
+                                                                                  *all_inputs)
         allow(current_subject).to receive(:db_accounts) { [account_double] }
       end
 
@@ -384,7 +387,6 @@ RSpec.describe Console do
         allow(current_subject).to receive_message_chain(:gets, :chomp).and_return('SC', 'exit')
         expect(current_subject).to receive(:puts).with(I18n.t(:main_menu, name: name)).twice
         current_subject.send(:main_menu)
-
       end
     end
 
@@ -396,11 +398,11 @@ RSpec.describe Console do
         allow(current_subject).to receive(:run_exit)
         allow_any_instance_of(CardsConsole).to receive(:updating_db)
 
-        commands.each_with_index {|(command, method_name), index|
+        commands.each_with_index do |(command, method_name), index|
           index > 3 ? (expect(current_subject).to receive(method_name)) : (expect_any_instance_of(CardsConsole).to receive(method_name))
           allow(current_subject).to receive_message_chain(:gets, :chomp).and_return(command, 'exit')
           current_subject.send(:main_menu)
-        }
+        end
       end
 
       it 'outputs incorrect message on undefined command' do
@@ -556,7 +558,6 @@ RSpec.describe Console do
             expect { card_console.send(:destroy_account_card) }.to output(message).to_stdout
           end
           card_console.send(:destroy_account_card)
-
         end
       end
 
@@ -736,9 +737,9 @@ RSpec.describe Console do
           context 'with tax lower than amount' do
             let(:custom_cards) do
               [
-                  CardUsual.new('usual'),
-                  CardCapitalist.new('capitalist'),
-                  CardVirtual.new('virtual')
+                CardUsual.new('usual'),
+                CardCapitalist.new('capitalist'),
+                CardVirtual.new('virtual')
               ]
             end
 
@@ -761,8 +762,8 @@ RSpec.describe Console do
                 expect do
                   card_console.send(:cards_choices, 'PM')
                 end.to output(
-                           /Money #{correct_money_amount_greater_than_tax} was put on #{custom_card.number}. Balance: #{new_balance}. Tax: #{custom_card.put_tax(correct_money_amount_greater_than_tax)}/
-                       ).to_stdout
+                  /Money #{correct_money_amount_greater_than_tax} was put on #{custom_card.number}. Balance: #{new_balance}. Tax: #{custom_card.put_tax(correct_money_amount_greater_than_tax)}/
+                ).to_stdout
 
                 expect(File.exist?(OVERRIDABLE_FILENAME)).to be true
                 file_accounts = YAML.load_file(OVERRIDABLE_FILENAME)
