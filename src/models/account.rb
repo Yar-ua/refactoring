@@ -1,13 +1,8 @@
 class Account
   attr_reader :name, :login, :password, :errors, :cards
-
+  
+  include Constants
   include DBHelper
-
-  VALID_RANGE = {
-    age: (23..90),
-    login: (4..20),
-    password: (6..30)
-  }.freeze
 
   def initialize(data)
     @name = data[:name]

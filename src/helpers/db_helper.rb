@@ -1,5 +1,5 @@
 module DBHelper
-  PATH = 'accounts.yml'
+  include Constants
 
   def write_to_file(data)
     File.open(PATH, 'w') { |f| f.write data.to_yaml }

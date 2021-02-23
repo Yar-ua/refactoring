@@ -1,7 +1,3 @@
-# frozen_string_literal: true
-
-# require_relative 'card'
-
 class CardVirtual < Card
   attr_accessor :number, :balance, :type
 

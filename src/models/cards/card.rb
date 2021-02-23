@@ -1,14 +1,7 @@
 class Card
-  attr_accessor :balance, :number, :type
+  include Constants
 
-  CARD_TYPES = {
-    usual: 'usual',
-    capitalist: 'capitalist',
-    virtual: 'virtual'
-  }.freeze
-
-  NUMBER_OF_CARD_SIZE = 16
-  CARD_NUMBERS = 10
+  attr_accessor :balance, :number, :type  
 
   def initialize
     @number = generate_number
