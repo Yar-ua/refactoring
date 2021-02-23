@@ -1,5 +1,4 @@
 class LoginValidator
-  # include Database
 
   attr_accessor :errors, :login
 

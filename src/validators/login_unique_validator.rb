@@ -1,5 +1,5 @@
 class LoginUniqueValidator
-  include Database
+  include DBHelper
 
   attr_accessor :errors, :login
   def initialize(login)

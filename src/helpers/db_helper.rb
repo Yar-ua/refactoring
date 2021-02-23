@@ -1,4 +1,4 @@
-module Database
+module DBHelper
   PATH = 'accounts.yml'
 
   def write_to_file(data)

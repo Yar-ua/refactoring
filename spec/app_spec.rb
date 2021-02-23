@@ -147,7 +147,7 @@ RSpec.describe Console do
         allow(current_subject).to receive_message_chain(:gets, :chomp).and_return(success_create_command_input, *success_inputs)
         allow(current_subject).to receive(:main_menu)
         allow(current_subject).to receive(:db_accounts).and_return([])
-        stub_const('Database::PATH', OVERRIDABLE_FILENAME)
+        stub_const('DBHelper::PATH', OVERRIDABLE_FILENAME)
       end
 
       after do
@@ -180,7 +180,7 @@ RSpec.describe Console do
         allow(current_subject).to receive_message_chain(:gets, :chomp).and_return(*all_inputs)
         allow(current_subject).to receive(:main_menu)
         allow(current_subject).to receive(:db_accounts).and_return([])
-        stub_const('Database::PATH', OVERRIDABLE_FILENAME)
+        stub_const('DBHelper::PATH', OVERRIDABLE_FILENAME)
       end
 
       context 'with name errors' do
@@ -434,7 +434,7 @@ RSpec.describe Console do
 
     context 'when deleting' do
       it 'deletes account if user inputs is y' do
-        stub_const('Database::PATH', OVERRIDABLE_FILENAME)
+        stub_const('DBHelper::PATH', OVERRIDABLE_FILENAME)
         allow(current_subject).to receive(:run_exit)
         expect(current_subject).to receive_message_chain(:gets, :chomp) { success_input }
         expect(correct_account).to receive(:db_accounts) { accounts }
@@ -493,7 +493,7 @@ RSpec.describe Console do
     context 'when correct card choose' do
       before do
         allow(current_subject).to receive(:db_accounts) { [real_account] }
-        stub_const('Database::PATH', OVERRIDABLE_FILENAME)
+        stub_const('DBHelper::PATH', OVERRIDABLE_FILENAME)
         current_subject.instance_variable_set(:@account, real_account)
       end
 
@@ -592,7 +592,7 @@ RSpec.describe Console do
         let(:deletable_card_number) { 1 }
 
         before do
-          stub_const('Database::PATH', OVERRIDABLE_FILENAME)
+          stub_const('DBHelper::PATH', OVERRIDABLE_FILENAME)
           real_account.instance_variable_set(:@cards, fake_cards)
           allow(card_console).to receive(:db_accounts) { [real_account] }
           card_console.instance_variable_set(:@account, real_account)
@@ -754,7 +754,7 @@ RSpec.describe Console do
                 real_account.instance_variable_set(:@cards, [custom_card, card_one, card_two])
                 allow(card_console).to receive_message_chain(:gets, :chomp).and_return(*commands)
                 allow(card_console).to receive(:db_accounts) { [real_account] }
-                stub_const('Database::PATH', OVERRIDABLE_FILENAME)
+                stub_const('DBHelper::PATH', OVERRIDABLE_FILENAME)
 
                 new_balance = default_balance + correct_money_amount_greater_than_tax - custom_card.put_tax(correct_money_amount_greater_than_tax)
 

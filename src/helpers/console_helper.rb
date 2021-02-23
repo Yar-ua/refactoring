@@ -1,6 +1,6 @@
 module ConsoleHelper
   include UserIOHelper
-  include Database
+  include DBHelper
 
   COMMANDS = {
     create: 'create',

@@ -1,7 +1,7 @@
 class Account
   attr_reader :name, :login, :password, :errors, :cards
 
-  include Database
+  include DBHelper
 
   VALID_RANGE = {
     age: (23..90),
