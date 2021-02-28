@@ -10,6 +10,7 @@ require_relative 'modules/constants'
 require_relative 'helpers/user_io_helper'
 require_relative 'helpers/db_helper'
 require_relative 'helpers/console_helper'
+require_relative 'helpers/cards_helper'
 
 require_relative 'validators/login_validator'
 require_relative 'validators/login_unique_validator'

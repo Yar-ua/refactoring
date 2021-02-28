@@ -1,5 +1,12 @@
 require: rubocop-rspec
 
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'Gemfile'
+    - 'spec/**/*.rb'
+
+
 RSpec/MessageChain:
   Enabled: false
 
