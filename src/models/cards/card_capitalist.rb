@@ -1,5 +1,3 @@
-# require_relative 'card'
-
 class CardCapitalist < Card
   attr_accessor :number, :balance, :type
 

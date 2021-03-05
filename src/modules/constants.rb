@@ -30,4 +30,10 @@ module Constants
   NUMBER_OF_CARD_SIZE = 16
 
   CARD_NUMBERS = 10
+
+  CARD_TAXES = {
+    withdraw: 0,
+    put: 0,
+    sender: 0
+  }.freeze
 end

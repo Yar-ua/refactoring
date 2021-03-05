@@ -31,8 +31,8 @@ class Account
   end
 
   def self.find_account(user_data_inputs, account)
-    account.detect do |db_acc|
-      db_acc.login == user_data_inputs[:login] || db_acc.password == user_data_inputs[:password]
+    account.detect do |db_account|
+      db_account.login == user_data_inputs[:login] && db_account.password == user_data_inputs[:password]
     end
   end
 
