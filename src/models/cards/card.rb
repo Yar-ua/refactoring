@@ -3,12 +3,6 @@ class Card
 
   attr_accessor :balance, :number, :type
 
-  TAXES = {
-    withdraw: 0,
-    put: 0,
-    sender: 0
-  }.freeze
-
   def initialize
     @number = generate_number
   end
@@ -52,14 +46,14 @@ class Card
   private
 
   def withdraw_tax(amount)
-    amount * TAXES[:withdraw]
+    raise NotImplementedError
   end
 
   def put_tax(amount)
-    amount * TAXES[:put]
+    raise NotImplementedError
   end
 
   def sender_tax(_amount)
-    TAXES[:sender]
+    raise NotImplementedError
   end
 end
