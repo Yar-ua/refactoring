@@ -1,5 +1,4 @@
 class Card
-
   attr_accessor :balance, :number, :type
 
   def initialize

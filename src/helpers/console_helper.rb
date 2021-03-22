@@ -1,5 +1,4 @@
 module ConsoleHelper
-  include UserIOHelper
   include DBHelper
 
   def back?(input)
@@ -10,11 +9,8 @@ module ConsoleHelper
     user_input == Constants::COMMANDS[:yes]
   end
 
-  def user_input
+  def user_input(message = nil)
+    puts message if message
     gets.chomp
-  end
-
-  def output(message)
-    puts message
   end
 end

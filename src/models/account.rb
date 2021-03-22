@@ -3,11 +3,11 @@ class Account
 
   include DBHelper
 
-  def initialize(data)
-    @name = data[:name]
-    @age = data[:age].to_i
-    @login = data[:login]
-    @password = data[:password]
+  def initialize(params)
+    @name = params[:name]
+    @age = params[:age].to_i
+    @login = params[:login]
+    @password = params[:password]
     @cards = []
     @errors = []
   end
@@ -26,7 +26,7 @@ class Account
   end
 
   def find_card_by_index(choice)
-    @cards[choice.to_i - 1]
+    @cards[choice.to_i.pred]
   end
 
   def self.find_account(user_data_inputs, account)

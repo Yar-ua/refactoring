@@ -18,7 +18,7 @@ class LoginValidator
   private
 
   def check_present
-    @errors << I18n.t(:login_present) if @login.empty?
+    @errors << I18n.t('validation.login.present') if @login.empty?
   end
 
   def check_length
@@ -27,15 +27,15 @@ class LoginValidator
   end
 
   def check_unique
-    @errors << I18n.t(:account_exists) if account_exists?
+    @errors << I18n.t('validation.login.exists') if account_exists?
   end
 
   def error_login_longer
-    I18n.t(:login_longer_than_symbols, number: Constants::VALID_RANGE[:login].min)
+    I18n.t('validation.login.longer', number: Constants::VALID_RANGE[:login].min)
   end
 
   def error_login_less
-    I18n.t(:login_less_than_symbols, number: Constants::VALID_RANGE[:login].max)
+    I18n.t('validation.login.shorter', number: Constants::VALID_RANGE[:login].max)
   end
 
   def account_exists?

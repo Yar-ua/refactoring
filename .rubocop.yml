@@ -4,8 +4,6 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'Gemfile'
-    # - 'spec/**/*.rb'
-
 
 RSpec/MessageChain:
   Enabled: false
@@ -29,11 +27,12 @@ Metrics/BlockLength:
 
 Metrics/LineLength:
   Max: 120
-
-Documentation:
+RSpec/FilePath:
+  Enabled: false
+Style/Documentation:
   Enabled: false
 
-FrozenStringLiteralComment:
+Style/FrozenStringLiteralComment:
   Enabled: false
 
 RSpec/MultipleMemoizedHelpers:

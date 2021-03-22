@@ -14,6 +14,6 @@ class AgeValidator
   private
 
   def error_message
-    I18n.t(:age_between, min: Constants::VALID_RANGE[:age].min, max: Constants::VALID_RANGE[:age].max)
+    I18n.t('validation.age', min: Constants::VALID_RANGE[:age].min, max: Constants::VALID_RANGE[:age].max)
   end
 end

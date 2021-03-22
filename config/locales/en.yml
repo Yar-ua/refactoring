@@ -52,21 +52,20 @@ en:
    - If you want to create account - press `create`\n
    - If you want to load account - press `load`\n
    - If you want to exit - press `exit`"
-
-  name_must_not_be_empty: 'Your name must not be empty and starts with first upcase letter'
-  name_capitalized: 'Your name must not be empty and starts with first upcase letter'
-
-  login_present: 'Login must present'
-  login_longer_than_symbols: 'Login must be longer then 4 symbols'
-  login_less_than_symbols: 'Login must be shorter then 20 symbols'
-
-  account_exists: 'Such account is already exists'
-
-  password_must_present: 'Password must present'
-  password_has_6_and_more_symbols: 'Password must be longer then 6 symbols'
-  password_has_30_and_less_symbols: 'Password must be shorter then 30 symbols'
-
-  age_between: 'Your Age must be greeter then 23 and lower then 90'
+  
+  validation:
+    first_letter: 'Your name must not be empty and starts with first upcase letter'
+    login:
+      present: 'Login must present'
+      longer: 'Login must be longer then 4 symbols'
+      shorter: 'Login must be shorter then 20 symbols'
+      exists: 'Such account is already exists'
+    password:
+      present: 'Password must present'
+      longer: 'Password must be longer then 6 symbols'
+      shorter: 'Password must be shorter then 30 symbols'
+    age: 'Your Age must be greeter then 23 and lower then 90'
+    
   no_active_account_yet: "there are no active accounts, type 'y' if you want to create one"
 
   press_exit: "enter `exit` to exit\n"

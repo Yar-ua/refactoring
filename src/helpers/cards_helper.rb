@@ -1,9 +1,11 @@
 module CardsHelper
   def card_attributes(amount, card, tax)
-    { amount: amount,
+    {
+      amount: amount,
       number: card.number,
       balance: card.balance,
-      tax: tax }
+      tax: tax
+    }
   end
 
   def card_amount(operation)

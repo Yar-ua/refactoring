@@ -19,7 +19,7 @@ class NameValidator
   end
 
   def check_capitalize
-    @errors << I18n.t(:name_capitalized) unless capitalized?
+    @errors << I18n.t('validation.first_letter') unless capitalized?
   end
 
   def capitalized?

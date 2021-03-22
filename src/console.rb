@@ -2,8 +2,7 @@ class Console
   include ConsoleHelper
 
   def console_menu
-    output(I18n.t(:hello))
-    case user_input
+    case user_input(I18n.t(:hello))
     when Constants::COMMANDS[:create] then create_account
     when Constants::COMMANDS[:load] then load_account
     else
@@ -13,17 +12,19 @@ class Console
   end
 
   private
-  
+
   def create_account
     loop do
-      name = enter_name
-      age = enter_age
-      login = enter_login
-      password = enter_password
-      @account = Account.new(name: name, age: age, login: login, password: password)
-      @account.valid? ? break : output(@account.errors.join("\n"))
+      account_params = {
+        name: user_input(I18n.t('ask.name')),
+        age: user_input(I18n.t('ask.age')),
+        login: user_input(I18n.t('ask.login')),
+        password: user_input(I18n.t('ask.password'))
+      }
+      @account = Account.new(account_params)
+      @account.valid? ? break : puts(@account.errors.join("\n"))
     end
-    updating_db(@account)
+    update_db(@account)
   end
 
   def load_account
@@ -32,7 +33,7 @@ class Console
 
     loop do
       @account = Account.find_account(login_and_password, accounts_db)
-      @account.nil? ? output(I18n.t('errors.user_not_exists')) : break
+      @account.nil? ? puts(I18n.t('errors.user_not_exists')) : break
     end
   end
 
@@ -43,13 +44,14 @@ class Console
 
   def main_menu
     loop do
-      output(I18n.t(:main_menu, name: @account.name))
+      puts I18n.t(:main_menu, name: @account.name)
       case command = choose_menu
       when Constants::COMMANDS[:show_cards] then show_account_cards
       when Constants::COMMANDS[:card_create] then create_new_type_card
       when Constants::COMMANDS[:delete_account] then destroy_account
       when Constants::COMMANDS[:exit] then return exit
-      else; redirect_to_cards_console(command); end
+      else redirect_to_cards_console(command)
+      end
     end
   end
 
@@ -58,33 +60,32 @@ class Console
       command = user_input
       return command if Constants::COMMANDS.value?(command)
 
-      output(I18n.t('errors.wrong_command'))
+      puts I18n.t('errors.wrong_command')
     end
   end
 
   def show_account_cards
-    return output(I18n.t('errors.no_active_cards')) if @account.cards.empty?
+    return puts I18n.t('errors.no_active_cards') if @account.cards.empty?
 
     show_active_card
   end
 
   def show_active_card
-    @account.cards.each { |card| output(I18n.t('show_cards', number: card.number, type: card.type)) }
+    @account.cards.each { |card| puts I18n.t('show_cards', number: card.number, type: card.type) }
   end
 
   def create_new_type_card
     loop do
-      output(I18n.t('create_card_message'))
-      type = user_input
+      type = user_input(I18n.t('create_card_message'))
       break @account.create_new_type_card(type) if Card.find_type(type)
 
-      output(I18n.t('errors.wrong_card_type'))
+      puts I18n.t('errors.wrong_card_type')
     end
-    updating_db(@account)
+    update_db(@account)
   end
 
   def destroy_account
-    output I18n.t('destroying_message')
+    puts I18n.t('destroying_message')
     return unless yes?
 
     @account.destroy
@@ -92,12 +93,12 @@ class Console
   end
 
   def redirect_to_cards_console(command)
+    return puts I18n.t('errors.no_active_cards') if @account.cards.empty?
+
     CardsConsole.new(@account).cards_choices(command)
   end
 
-  private
-
   def login_and_password
-    { login: enter_login, password: enter_password }
+    { login: user_input(I18n.t('ask.login')), password: user_input(I18n.t('ask.password')) }
   end
 end

@@ -7,15 +7,13 @@ class CardsConsole
   end
 
   def cards_choices(command)
-    return output(I18n.t('errors.no_active_cards')) if @account.cards.empty?
-
     case command
     when Constants::COMMANDS[:card_destroy] then destroy_account_card
     when Constants::COMMANDS[:put_money] then put_account_money(command)
     when Constants::COMMANDS[:withdraw_money] then withdraw_account_money(command)
     when Constants::COMMANDS[:send_money] then send_account_money(command)
     end
-    updating_db(@account)
+    update_db(@account)
   end
 
   def destroy_account_card
@@ -38,7 +36,7 @@ class CardsConsole
 
     card.put_money(amount)
     puts I18n.t('common_phrases.after_put',
-                  card_attributes(amount, card, card.put_tax(amount)))
+                card_attributes(amount, card, card.put_tax(amount)))
   end
 
   def validate_operation(command)
@@ -68,7 +66,7 @@ class CardsConsole
 
     card.withdraw_money(amount)
     puts I18n.t('common_phrases.after_withdraw',
-                  card_attributes(amount, card, card.sender_tax(amount)))
+                card_attributes(amount, card, card.sender_tax(amount)))
   end
 
   def send_account_money(command)
@@ -81,25 +79,29 @@ class CardsConsole
     recipient_card = recipient_card_validation
     return if recipient_card.nil?
 
-    return unless validate_send_operation_taxes(sender_card, recipient_card, amount)
+    return puts I18n.t('errors.no_money_left') unless sender_card.operation_send_valid?(amount)
+
+    return puts I18n.t('errors.no_money_on_recipient') unless recipient_card.operation_put_valid?(amount)
+
+    # return unless validate_send_operation_taxes(sender_card, recipient_card, amount)
 
     send_money_operation(sender_card, recipient_card, amount)
   end
 
-  def validate_send_operation_taxes(sender_card, recipient_card, amount)
-    return puts I18n.t('errors.no_money_left') unless sender_card.operation_send_valid?(amount)
-    return puts I18n.t('errors.no_money_on_recipient') unless recipient_card.operation_put_valid?(amount)
+  # def validate_send_operation_taxes(sender_card, recipient_card, amount)
+  #   return puts I18n.t('errors.no_money_left') unless sender_card.operation_send_valid?(amount)
+  #   return puts I18n.t('errors.no_money_on_recipient') unless recipient_card.operation_put_valid?(amount)
 
-    true
-  end
+  #   true
+  # end
 
   def send_money_operation(sender_card, recipient_card, amount)
     sender_card.send_money(amount)
     recipient_card.put_money(amount)
     puts I18n.t('common_phrases.after_withdraw',
-                  card_attributes(amount, sender_card, sender_card.sender_tax(amount)))
+                card_attributes(amount, sender_card, sender_card.sender_tax(amount)))
     puts I18n.t('common_phrases.after_put',
-                  card_attributes(amount, recipient_card, recipient_card.put_tax(amount)))
+                card_attributes(amount, recipient_card, recipient_card.put_tax(amount)))
   end
 
   def recipient_card_validation
@@ -123,9 +125,9 @@ class CardsConsole
   def show_cards_for_destroying
     @account.cards.each_with_index do |card, index|
       puts I18n.t('common_phrases.show_cards_for_destroying',
-                    number: card.number,
-                    type: card.type,
-                    index: index + 1)
+                  number: card.number,
+                  type: card.type,
+                  index: index + 1)
     end
     puts I18n.t('press_exit')
   end

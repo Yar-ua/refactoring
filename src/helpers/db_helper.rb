@@ -7,7 +7,7 @@ module DBHelper
     File.exist?(Constants::PATH) ? YAML.load_file(Constants::PATH) : []
   end
 
-  def updating_db(entity)
+  def update_db(entity)
     updated_account = db_accounts
     updated_account << entity
     write_to_file(updated_account.reverse.uniq(&:login))

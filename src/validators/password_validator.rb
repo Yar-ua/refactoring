@@ -16,15 +16,15 @@ class PasswordValidator
   private
 
   def check_presence
-    @errors << I18n.t(:password_must_present) if @password.empty?
+    @errors << I18n.t('validation.password.present') if @password.empty?
   end
 
   def check_min_length
-    @errors << I18n.t(:password_has_6_and_more_symbols) if min_length?
+    @errors << I18n.t('validation.password.longer') if min_length?
   end
 
   def check_max_length
-    @errors << I18n.t(:password_has_30_and_less_symbols) if max_length?
+    @errors << I18n.t('validation.password.shorter') if max_length?
   end
 
   def min_length?
