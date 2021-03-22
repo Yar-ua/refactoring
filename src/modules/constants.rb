@@ -1,5 +1,5 @@
 module Constants
-  PATH = 'accounts.yml'.freeze
+  PATH = 'db/accounts.yml'.freeze
 
   COMMANDS = {
     create: 'create',

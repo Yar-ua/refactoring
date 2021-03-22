@@ -4,7 +4,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'Gemfile'
-    - 'spec/**/*.rb'
+    # - 'spec/**/*.rb'
 
 
 RSpec/MessageChain:

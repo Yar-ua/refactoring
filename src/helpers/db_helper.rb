@@ -1,12 +1,10 @@
 module DBHelper
-  include Constants
-
   def write_to_file(data)
-    File.open(PATH, 'w') { |f| f.write data.to_yaml }
+    File.open(Constants::PATH, 'w') { |f| f.write data.to_yaml }
   end
 
   def db_accounts
-    File.exist?(PATH) ? YAML.load_file(PATH) : []
+    File.exist?(Constants::PATH) ? YAML.load_file(Constants::PATH) : []
   end
 
   def updating_db(entity)

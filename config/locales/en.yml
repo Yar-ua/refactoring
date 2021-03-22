@@ -1,10 +1,9 @@
 en:
-  CARDS:
-    create_card_message: "'You could create one of 3 card types'
-     '- Usual card. 2% tax on card INCOME. 20$ tax on SENDING money from this card. 5% tax on WITHDRAWING money. For creation this card - press `usual`'
-     '- Capitalist card. 10$ tax on card INCOME. 10% tax on SENDING money from this card. 4$ tax on WITHDRAWING money. For creation this card - press `capitalist`'
-     '- Virtual card. 1$ tax on card INCOME. 1$ tax on SENDING money from this card. 12% tax on WITHDRAWING money. For creation this card - press `virtual`'
-     '- For exit - press `exit`'"
+  create_card_message: "'You could create one of 3 card types'
+   '- Usual card. 2% tax on card INCOME. 20$ tax on SENDING money from this card. 5% tax on WITHDRAWING money. For creation this card - press `usual`'
+   '- Capitalist card. 10$ tax on card INCOME. 10% tax on SENDING money from this card. 4$ tax on WITHDRAWING money. For creation this card - press `capitalist`'
+   '- Virtual card. 1$ tax on card INCOME. 1$ tax on SENDING money from this card. 12% tax on WITHDRAWING money. For creation this card - press `virtual`'
+   '- For exit - press `exit`'"
 
   main_menu: "\nWelcome, %{name}
      If you want to\n
@@ -17,7 +16,7 @@ en:
      - destroy account - press `DA`\n
      - exit from account - press `exit`"
 
-  ERROR:
+  errors:
     user_not_exists: 'There is no account with given credentials'
     wrong_command: 'Wrong command. Try again!'
     no_active_cards: "There is no active cards!\n"
@@ -43,7 +42,7 @@ en:
     after_withdraw: "Money %{amount} withdrawed from %{number}. Money left: %{balance}. Tax: %{tax}"
     recipient_card: 'Enter the recipient card:'
 
-  ASK:
+  ask:
     name: 'Enter your name'
     age: 'Enter your age'
     login: 'Enter your login'
@@ -71,8 +70,6 @@ en:
   no_active_account_yet: "there are no active accounts, type 'y' if you want to create one"
 
   press_exit: "enter `exit` to exit\n"
-  exit: 'exit'
-  yes: 'y'
 
   destroying_message: 'Are you sure you want to destroy account?[y/n]'
   show_cards: "- %{number}, %{type}"

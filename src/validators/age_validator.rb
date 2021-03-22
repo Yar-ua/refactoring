@@ -1,5 +1,5 @@
 class AgeValidator
-  attr_accessor :errors, :age
+  attr_reader :errors, :age
 
   def initialize(age)
     @errors = []
@@ -7,8 +7,13 @@ class AgeValidator
   end
 
   def valid?
-    @errors << I18n.t(:age_between, min: Account::VALID_RANGE[:age].min, max: Account::VALID_RANGE[:age].max) unless
-        (Account::VALID_RANGE[:age]).cover?(@age)
+    @errors << error_message unless Constants::VALID_RANGE[:age].cover?(@age)
     @errors.empty?
+  end
+
+  private
+
+  def error_message
+    I18n.t(:age_between, min: Constants::VALID_RANGE[:age].min, max: Constants::VALID_RANGE[:age].max)
   end
 end

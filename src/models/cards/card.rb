@@ -1,5 +1,4 @@
 class Card
-  include Constants
 
   attr_accessor :balance, :number, :type
 
@@ -8,11 +7,11 @@ class Card
   end
 
   def generate_number
-    Array.new(NUMBER_OF_CARD_SIZE) { rand(CARD_NUMBERS) }.join
+    Array.new(Constants::NUMBER_OF_CARD_SIZE) { rand(Constants::CARD_NUMBERS) }.join
   end
 
   def self.find_type(input)
-    CARD_TYPES.value?(input)
+    Constants::CARD_TYPES.value?(input)
   end
 
   def put_money(amount)

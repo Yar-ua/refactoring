@@ -1,7 +1,6 @@
 class Account
   attr_reader :name, :login, :password, :errors, :cards
 
-  include Constants
   include DBHelper
 
   def initialize(data)
@@ -20,9 +19,9 @@ class Account
 
   def create_new_type_card(type)
     case type
-    when Card::CARD_TYPES[:usual] then @cards << CardUsual.new(type)
-    when Card::CARD_TYPES[:capitalist] then @cards << CardCapitalist.new(type)
-    when Card::CARD_TYPES[:virtual] then @cards << CardVirtual.new(type)
+    when Constants::CARD_TYPES[:usual] then @cards << CardUsual.new(type)
+    when Constants::CARD_TYPES[:capitalist] then @cards << CardCapitalist.new(type)
+    when Constants::CARD_TYPES[:virtual] then @cards << CardVirtual.new(type)
     end
   end
 
@@ -46,9 +45,6 @@ class Account
   def validate_login
     login_validator = LoginValidator.new(@login)
     @errors << login_validator.errors unless login_validator.valid?
-
-    login_unique_validator = LoginUniqueValidator.new(@login)
-    @errors << login_unique_validator.errors unless login_unique_validator.valid?
   end
 
   def validate_name

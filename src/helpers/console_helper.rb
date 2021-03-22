@@ -1,18 +1,13 @@
 module ConsoleHelper
-  include Constants
   include UserIOHelper
   include DBHelper
 
   def back?(input)
-    input == COMMANDS[:exit]
-  end
-
-  def run_exit
-    exit
+    input == Constants::COMMANDS[:exit]
   end
 
   def yes?
-    user_input == COMMANDS[:yes]
+    user_input == Constants::COMMANDS[:yes]
   end
 
   def user_input

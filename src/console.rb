@@ -4,14 +4,16 @@ class Console
   def console_menu
     output(I18n.t(:hello))
     case user_input
-    when COMMANDS[:create] then create_account
-    when COMMANDS[:load] then load_account
+    when Constants::COMMANDS[:create] then create_account
+    when Constants::COMMANDS[:load] then load_account
     else
-      run_exit
+      exit
     end
     main_menu
   end
 
+  private
+  
   def create_account
     loop do
       name = enter_name
@@ -30,7 +32,7 @@ class Console
 
     loop do
       @account = Account.find_account(login_and_password, accounts_db)
-      @account.nil? ? output(I18n.t('ERROR.user_not_exists')) : break
+      @account.nil? ? output(I18n.t('errors.user_not_exists')) : break
     end
   end
 
@@ -43,10 +45,10 @@ class Console
     loop do
       output(I18n.t(:main_menu, name: @account.name))
       case command = choose_menu
-      when COMMANDS[:show_cards] then show_account_cards
-      when COMMANDS[:card_create] then create_new_type_card
-      when COMMANDS[:delete_account] then destroy_account
-      when COMMANDS[:exit] then return run_exit
+      when Constants::COMMANDS[:show_cards] then show_account_cards
+      when Constants::COMMANDS[:card_create] then create_new_type_card
+      when Constants::COMMANDS[:delete_account] then destroy_account
+      when Constants::COMMANDS[:exit] then return exit
       else; redirect_to_cards_console(command); end
     end
   end
@@ -54,14 +56,14 @@ class Console
   def choose_menu
     loop do
       command = user_input
-      return command if COMMANDS.value?(command)
+      return command if Constants::COMMANDS.value?(command)
 
-      output(I18n.t('ERROR.wrong_command'))
+      output(I18n.t('errors.wrong_command'))
     end
   end
 
   def show_account_cards
-    return output(I18n.t('ERROR.no_active_cards')) if @account.cards.empty?
+    return output(I18n.t('errors.no_active_cards')) if @account.cards.empty?
 
     show_active_card
   end
@@ -72,11 +74,11 @@ class Console
 
   def create_new_type_card
     loop do
-      output(I18n.t('CARDS.create_card_message'))
+      output(I18n.t('create_card_message'))
       type = user_input
       break @account.create_new_type_card(type) if Card.find_type(type)
 
-      output(I18n.t('ERROR.wrong_card_type'))
+      output(I18n.t('errors.wrong_card_type'))
     end
     updating_db(@account)
   end
@@ -86,7 +88,7 @@ class Console
     return unless yes?
 
     @account.destroy
-    run_exit
+    exit
   end
 
   def redirect_to_cards_console(command)
