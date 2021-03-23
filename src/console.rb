@@ -14,6 +14,11 @@ class Console
   private
 
   def create_account
+    account_params
+    update_db(@account)
+  end
+
+  def account_params
     loop do
       account_params = {
         name: user_input(I18n.t('ask.name')),
@@ -24,7 +29,6 @@ class Console
       @account = Account.new(account_params)
       @account.valid? ? break : puts(@account.errors.join("\n"))
     end
-    update_db(@account)
   end
 
   def load_account

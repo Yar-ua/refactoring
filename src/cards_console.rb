@@ -28,10 +28,9 @@ class CardsConsole
   end
 
   def put_account_money(command)
-    operation = validate_operation(command)
-    return if operation.nil?
+    card, amount = validate_operation(command)
+    return unless [card, amount].all?
 
-    amount, card = card_amount(operation)
     return puts I18n.t('errors.tax_higher') unless card.operation_put_valid?(amount)
 
     card.put_money(amount)
@@ -40,16 +39,15 @@ class CardsConsole
   end
 
   def validate_operation(command)
-    action = Constants::COMMANDS.key(command)
-    puts I18n.t("operations.choose_card.#{action}")
-    chosen_card = select_card
-    return if chosen_card.nil?
+    puts I18n.t("operations.choose_card.#{Constants::COMMANDS.key(command)}")
+    card = select_card
+    return if card.nil?
 
-    puts I18n.t("operations.amount.#{action}")
+    puts I18n.t("operations.amount.#{Constants::COMMANDS.key(command)}")
     amount = validate_amount
     return if amount.nil?
 
-    { chosen_card: chosen_card, amount: amount }
+    [card, amount]
   end
 
   def validate_amount
@@ -58,10 +56,9 @@ class CardsConsole
   end
 
   def withdraw_account_money(command)
-    operation = validate_operation(command)
-    return if operation.nil?
+    card, amount = validate_operation(command)
+    return unless [card, amount].all?
 
-    amount, card = card_amount(operation)
     return puts I18n.t('errors.no_money_left') unless card.operation_withdraw_valid?(amount)
 
     card.withdraw_money(amount)
@@ -70,12 +67,10 @@ class CardsConsole
   end
 
   def send_account_money(command)
-    operation = validate_operation(command)
-    return if operation.nil?
+    sender_card, amount = validate_operation(command)
+    return unless [card, amount].all?
 
-    amount, sender_card = card_and_amount(operation)
     puts I18n.t('common_phrases.recipient_card')
-
     recipient_card = recipient_card_validation
     return if recipient_card.nil?
 
@@ -83,17 +78,8 @@ class CardsConsole
 
     return puts I18n.t('errors.no_money_on_recipient') unless recipient_card.operation_put_valid?(amount)
 
-    # return unless validate_send_operation_taxes(sender_card, recipient_card, amount)
-
     send_money_operation(sender_card, recipient_card, amount)
   end
-
-  # def validate_send_operation_taxes(sender_card, recipient_card, amount)
-  #   return puts I18n.t('errors.no_money_left') unless sender_card.operation_send_valid?(amount)
-  #   return puts I18n.t('errors.no_money_on_recipient') unless recipient_card.operation_put_valid?(amount)
-
-  #   true
-  # end
 
   def send_money_operation(sender_card, recipient_card, amount)
     sender_card.send_money(amount)

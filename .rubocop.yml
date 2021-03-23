@@ -14,8 +14,8 @@ RSpec/NestedGroups:
 RSpec/MultipleExpectations:
   Max: 5
 
-RSpec/ExampleLength:
-  Max: 10
+# RSpec/ExampleLength:
+#   Max: 10
 
 RSpec/MessageSpies:
   Enabled: false
@@ -31,9 +31,10 @@ RSpec/FilePath:
   Enabled: false
 Style/Documentation:
   Enabled: false
-
 Style/FrozenStringLiteralComment:
   Enabled: false
-
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
+  
