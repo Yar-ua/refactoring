@@ -1,5 +1,4 @@
 require_relative '../src/loader'
-require_relative './support/support'
 
 RSpec.describe Console do
   let(:current_subject) { described_class.new }
@@ -8,6 +7,7 @@ RSpec.describe Console do
   let(:valid_name) { 'John' }
   let(:real_account) { Account.new(name: valid_name, age: valid_age, login: valid_string, password: valid_string) }
   let(:card_console) { CardsConsole.new(real_account) }
+  let(:overridable_filename) { 'spec/fixtures/account.yml' }
 
   describe '#main_menu' do
     before { allow(current_subject).to receive(:main_menu) }
@@ -50,11 +50,11 @@ RSpec.describe Console do
                                                                                   *success_inputs)
         allow(current_subject).to receive(:main_menu)
         allow(current_subject).to receive(:db_accounts).and_return([])
-        stub_const('Constants::PATH', TestConstants::OVERRIDABLE_FILENAME)
+        stub_const('Constants::PATH_TO_DB_FILE', overridable_filename)
       end
 
       after do
-        File.delete(TestConstants::OVERRIDABLE_FILENAME) if File.exist?(TestConstants::OVERRIDABLE_FILENAME)
+        File.delete(overridable_filename) if File.exist?(overridable_filename)
       end
 
       it 'with correct outout' do
@@ -68,8 +68,8 @@ RSpec.describe Console do
 
       it 'write to file Account instance' do
         current_subject.console_menu
-        expect(File.exist?(TestConstants::OVERRIDABLE_FILENAME)).to be true
-        accounts = YAML.load_file(TestConstants::OVERRIDABLE_FILENAME)
+        expect(File.exist?(overridable_filename)).to be true
+        accounts = YAML.load_file(overridable_filename)
         expect(accounts).to be_a Array
         expect(accounts.size).to be 1
         accounts.map { |account| expect(account).to be_a Account }
@@ -83,7 +83,7 @@ RSpec.describe Console do
         allow(current_subject).to receive_message_chain(:gets, :chomp).and_return(*all_inputs)
         allow(current_subject).to receive(:main_menu)
         allow(current_subject).to receive(:db_accounts).and_return([])
-        stub_const('Constants::PATH', TestConstants::OVERRIDABLE_FILENAME)
+        stub_const('Constants::PATH_TO_DB_FILE', overridable_filename)
       end
 
       context 'with name errors' do
@@ -301,7 +301,7 @@ RSpec.describe Console do
     let(:accounts) { [correct_account, fake_account, fake_account2] }
 
     after do
-      File.delete(TestConstants::OVERRIDABLE_FILENAME) if File.exist?(TestConstants::OVERRIDABLE_FILENAME)
+      File.delete(overridable_filename) if File.exist?(overridable_filename)
     end
 
     it 'with correct outout' do
@@ -311,7 +311,7 @@ RSpec.describe Console do
 
     context 'when deleting' do
       it 'deletes account if user inputs is y' do
-        stub_const('Constants::PATH', TestConstants::OVERRIDABLE_FILENAME)
+        stub_const('Constants::PATH_TO_DB_FILE', overridable_filename)
         allow(current_subject).to receive(:exit)
         allow(current_subject).to receive_message_chain(:gets, :chomp) { success_input }
         allow(correct_account).to receive(:db_accounts) { accounts }
@@ -319,8 +319,8 @@ RSpec.describe Console do
 
         current_subject.send(:destroy_account)
 
-        expect(File.exist?(TestConstants::OVERRIDABLE_FILENAME)).to be true
-        file_accounts = YAML.load_file(TestConstants::OVERRIDABLE_FILENAME)
+        expect(File.exist?(overridable_filename)).to be true
+        file_accounts = YAML.load_file(overridable_filename)
         expect(file_accounts).to be_a Array
         expect(file_accounts.size).to be 2
       end
@@ -330,7 +330,7 @@ RSpec.describe Console do
 
         current_subject.send(:destroy_account)
 
-        expect(File.exist?(TestConstants::OVERRIDABLE_FILENAME)).to be false
+        expect(File.exist?(overridable_filename)).to be false
       end
     end
   end
@@ -368,27 +368,29 @@ RSpec.describe Console do
     end
 
     context 'when correct card choose' do
+      let(:cards) { [CardUsual.new(:usual), CardCapitalist.new(:capitalist), CardVirtual.new(:virtual)] }
+
       before do
         allow(current_subject).to receive(:db_accounts) { [real_account] }
-        stub_const('Constants::PATH', TestConstants::OVERRIDABLE_FILENAME)
+        stub_const('Constants::PATH_TO_DB_FILE', overridable_filename)
         current_subject.instance_variable_set(:@account, real_account)
       end
 
       after do
-        File.delete(TestConstants::OVERRIDABLE_FILENAME) if File.exist?(TestConstants::OVERRIDABLE_FILENAME)
+        File.delete(overridable_filename) if File.exist?(overridable_filename)
       end
 
-      TestConstants::CARDS.each do |card_type, card_info|
-        it "create card with #{card_type} type" do
-          allow(current_subject).to receive_message_chain(:gets, :chomp) { card_info[:type] }
+      it 'create card with card_type' do
+        cards.each_with_index do |card, index|
+          allow(current_subject).to receive_message_chain(:gets, :chomp) { card.type.to_s }
 
           current_subject.send(:create_new_type_card)
 
-          expect(File.exist?(TestConstants::OVERRIDABLE_FILENAME)).to be true
-          file_accounts = YAML.load_file(TestConstants::OVERRIDABLE_FILENAME)
-          expect(file_accounts.first.cards.first.type).to eq card_info[:type]
-          expect(file_accounts.first.cards.first.balance).to eq card_info[:balance]
-          expect(file_accounts.first.cards.first.number.length).to be 16
+          expect(File.exist?(overridable_filename)).to be true
+          file_accounts = YAML.load_file(overridable_filename)
+          expect(file_accounts.first.cards[index].type).to eq card.type.to_s
+          expect(file_accounts.first.cards[index].balance).to eq card.balance
+          expect(file_accounts.first.cards[index].number.length).to be 16
         end
       end
     end
@@ -471,14 +473,14 @@ RSpec.describe Console do
         let(:deletable_card_number) { 1 }
 
         before do
-          stub_const('Constants::PATH', TestConstants::OVERRIDABLE_FILENAME)
+          stub_const('Constants::PATH_TO_DB_FILE', overridable_filename)
           real_account.instance_variable_set(:@cards, fake_cards)
           allow(card_console).to receive(:db_accounts) { [real_account] }
           card_console.instance_variable_set(:@account, real_account)
         end
 
         after do
-          File.delete(TestConstants::OVERRIDABLE_FILENAME) if File.exist?(TestConstants::OVERRIDABLE_FILENAME)
+          File.delete(overridable_filename) if File.exist?(overridable_filename)
         end
 
         it 'accept deleting' do
@@ -487,8 +489,8 @@ RSpec.describe Console do
 
           expect { card_console.send(:cards_choices, 'DC') }.to change { real_account.cards.size }.by(-1)
 
-          expect(File.exist?(TestConstants::OVERRIDABLE_FILENAME)).to be true
-          file_accounts = YAML.load_file(TestConstants::OVERRIDABLE_FILENAME)
+          expect(File.exist?(overridable_filename)).to be true
+          file_accounts = YAML.load_file(overridable_filename)
           expect(file_accounts.first.cards).not_to include(card_one)
         end
 
@@ -625,7 +627,7 @@ RSpec.describe Console do
           let(:commands) { [chosen_card_number, correct_money_amount_greater_than_tax] }
 
           after do
-            File.delete(TestConstants::OVERRIDABLE_FILENAME) if File.exist?(TestConstants::OVERRIDABLE_FILENAME)
+            File.delete(overridable_filename) if File.exist?(overridable_filename)
           end
 
           it do
@@ -634,7 +636,7 @@ RSpec.describe Console do
               real_account.instance_variable_set(:@cards, [custom_card, card_one, card_two])
               allow(card_console).to receive_message_chain(:gets, :chomp).and_return(*commands)
               allow(card_console).to receive(:db_accounts) { [real_account] }
-              stub_const('Constants::PATH', TestConstants::OVERRIDABLE_FILENAME)
+              stub_const('Constants::PATH_TO_DB_FILE', overridable_filename)
 
               new_balance = default_balance + correct_money_amount_greater_than_tax -
                             custom_card.put_tax(correct_money_amount_greater_than_tax)
@@ -643,8 +645,8 @@ RSpec.describe Console do
                 card_console.send(:cards_choices, 'PM')
               end.to output(include "Money #{correct_money_amount_greater_than_tax}").to_stdout
 
-              expect(File.exist?(TestConstants::OVERRIDABLE_FILENAME)).to be true
-              file_accounts = YAML.load_file(TestConstants::OVERRIDABLE_FILENAME)
+              expect(File.exist?(overridable_filename)).to be true
+              file_accounts = YAML.load_file(overridable_filename)
               expect(file_accounts.first.cards.first.balance).to eq(new_balance)
             end
           end

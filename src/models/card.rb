@@ -34,7 +34,7 @@ class Card
   end
 
   def operation_send_valid?(amount)
-    (@balance - amount - sender_tax(amount)).positive?
+    !(@balance - amount - sender_tax(amount)).negative?
   end
 
   def calculate_tax(amount, percent_tax, fixed_tax)

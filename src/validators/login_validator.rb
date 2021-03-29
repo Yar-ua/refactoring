@@ -22,19 +22,19 @@ class LoginValidator
   end
 
   def check_length
-    @errors << error_login_longer if @login.size < Constants::VALID_RANGE[:login].min
-    @errors << error_login_less if @login.size > Constants::VALID_RANGE[:login].max
+    @errors << too_long_error_message if @login.size < Constants::VALID_RANGE[:login].min
+    @errors << too_short_error_message if @login.size > Constants::VALID_RANGE[:login].max
   end
 
   def check_unique
     @errors << I18n.t('validation.login.exists') if account_exists?
   end
 
-  def error_login_longer
+  def too_long_error_message
     I18n.t('validation.login.longer', number: Constants::VALID_RANGE[:login].min)
   end
 
-  def error_login_less
+  def too_short_error_message
     I18n.t('validation.login.shorter', number: Constants::VALID_RANGE[:login].max)
   end
 

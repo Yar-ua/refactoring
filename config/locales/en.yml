@@ -54,7 +54,9 @@ en:
    - If you want to exit - press `exit`"
   
   validation:
-    first_letter: 'Your name must not be empty and starts with first upcase letter'
+    name:
+      empty_name: 'Your name must not be empty'
+      first_letter: 'Your name must starts with first upcase letter'
     login:
       present: 'Login must present'
       longer: 'Login must be longer then 4 symbols'

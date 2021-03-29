@@ -15,11 +15,11 @@ class NameValidator
   private
 
   def check_presence
-    @errors << I18n.t(:name_must_not_be_empty) if @name.empty?
+    @errors << I18n.t('validation.name.empty_name') if @name.empty?
   end
 
   def check_capitalize
-    @errors << I18n.t('validation.first_letter') unless capitalized?
+    @errors << I18n.t('validation.name.first_letter') unless capitalized?
   end
 
   def capitalized?

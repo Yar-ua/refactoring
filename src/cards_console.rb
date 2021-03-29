@@ -16,6 +16,8 @@ class CardsConsole
     update_db(@account)
   end
 
+  private
+
   def destroy_account_card
     puts I18n.t('common_phrases.if_you_want_to_delete')
     chosen_card = select_card
@@ -113,7 +115,7 @@ class CardsConsole
       puts I18n.t('common_phrases.show_cards_for_destroying',
                   number: card.number,
                   type: card.type,
-                  index: index + 1)
+                  index: index.next)
     end
     puts I18n.t('press_exit')
   end
