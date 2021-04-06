@@ -1,5 +1,10 @@
 require: rubocop-rspec
 
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'Gemfile'
+
 RSpec/MessageChain:
   Enabled: false
 
@@ -8,9 +13,6 @@ RSpec/NestedGroups:
 
 RSpec/MultipleExpectations:
   Max: 5
-
-RSpec/ExampleLength:
-  Max: 10
 
 RSpec/MessageSpies:
   Enabled: false
@@ -22,9 +24,13 @@ Metrics/BlockLength:
 
 Metrics/LineLength:
   Max: 120
-
-Documentation:
+RSpec/FilePath:
   Enabled: false
-
-FrozenStringLiteralComment:
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+RSpec/ExampleLength:
   Enabled: false
